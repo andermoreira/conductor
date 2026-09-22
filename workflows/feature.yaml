@@ -1,0 +1,30 @@
+id: feature
+description: Bounded feature workflow with independent discovery, planning, implementation, review, and verification.
+steps:
+  - id: discover
+    type: agent
+    agent: explorer
+    inputs: [task]
+    output: discovery.md
+
+  - id: plan
+    type: agent
+    agent: architect
+    inputs: [task, discovery.md]
+    output: plan.md
+
+  - id: implement
+    type: agent
+    agent: implementer
+    inputs: [task, discovery.md, plan.md]
+    output: implementation.md
+
+  - id: review
+    type: agent
+    agent: reviewer
+    inputs: [task, plan.md, implementation.md]
+    output: review.md
+
+  - id: verify
+    type: gate
+    gate: default

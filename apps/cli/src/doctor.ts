@@ -3,7 +3,7 @@ import { runCommand, type CommandResult } from "@conductor/workspace";
 interface ProviderDiagnostic {
   command: string;
   label: string;
-  authArgs: string[];
+  authArgs?: string[];
   helpArgs: string[];
   capabilities: readonly string[];
 }
@@ -42,9 +42,8 @@ const providerDiagnostics: readonly ProviderDiagnostic[] = [
   {
     command: "agy",
     label: "Antigravity CLI",
-    authArgs: ["status"],
     helpArgs: ["--help"],
-    capabilities: ["-p", "--output-format", "stream-json", "--sandbox"]
+    capabilities: ["-p", "--output-format", "stream-json", "--sandbox", "--mode"]
   }
 ];
 
@@ -79,7 +78,9 @@ export async function runDoctor(options: DoctorOptions): Promise<boolean> {
       write(`✓ ${diagnostic.label}: ${version.stdout.trim() || "available"}`);
       if (!options.verbose) continue;
 
-      const auth = await run(diagnostic.command, diagnostic.authArgs, cwd, 15_000).catch(() => undefined);
+      const auth = diagnostic.authArgs
+        ? await run(diagnostic.command, diagnostic.authArgs, cwd, 15_000).catch(() => undefined)
+        : undefined;
       const help = await run(diagnostic.command, diagnostic.helpArgs, cwd, 15_000).catch(() => undefined);
       const authOutput = auth?.exitCode === 0 ? `${auth.stdout}\n${auth.stderr}` : "";
       const helpOutput = help?.exitCode === 0 ? `${help.stdout}\n${help.stderr}` : "";

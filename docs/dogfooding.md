@@ -27,6 +27,26 @@ The `doctor --verbose` probes use provider-native status commands only to derive
 `authenticated`, `not authenticated`, or `unknown` state. They do not print those commands'
 raw output, preventing account metadata or credentials from entering Conductor output.
 
+## Follow-up probe: Antigravity 1.2.8
+
+The [official installer](https://www.antigravity.google/docs/cli/install/) was reviewed, then used
+with a custom writable target and an isolated `HOME`. It downloaded version 1.2.8 and verified its
+SHA-512 before installation. Its real help output confirms the adapter's `-p`, `--output-format
+stream-json`, `--sandbox`, `--mode plan`, and `--effort high` flags. The adapter now supplies
+`--mode plan` for a Conductor read-only agent. The matching JSONL lifecycle is documented in the
+[official headless-mode reference](https://www.agy.dev/docs/cli/headless/).
+
+`--mode plan` is not an OS-level or filesystem read-only boundary in headless mode; that mode can
+still inherit workspace write permissions from the user's Antigravity settings. Conductor therefore
+treats it as an intent signal only and retains its provider-independent workspace fingerprint as
+post-step mutation detection. A fully preventive boundary requires running the CLI in an isolated
+VM or container with filesystem permissions enforced outside the provider.
+
+This version does not expose a non-interactive `status` subcommand. `doctor --verbose` therefore
+reports its authentication state as `unknown` rather than invoking a nonexistent command. A
+headless probe correctly requested an interactive Google authorization; it cannot be completed by
+the automated runner without a user-approved signed-in session.
+
 ## Findings and changes
 
 1. Codex CLI 0.155.1 supports `exec --json --sandbox`, but not the previously passed

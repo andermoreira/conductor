@@ -19,6 +19,7 @@
   "scripts": {
     "build": "tsup apps/cli/src/index.ts --format esm --clean",
     "dev": "tsx apps/cli/src/index.ts",
+    "dogfood": "sh scripts/dogfood.sh",
     "test": "tsx --test tests/*.test.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",

@@ -6,7 +6,7 @@ import { Command } from "commander";
 import { createDefaultProviders } from "@conductor/adapters";
 import { loadConfig } from "@conductor/config";
 import { Orchestrator } from "@conductor/runtime";
-import { runCommand } from "@conductor/workspace";
+import { runDoctor } from "./doctor.js";
 
 function isConfigRoot(path: string): boolean {
   return ["agents", "workflows", "policies"].every((name) =>
@@ -28,31 +28,8 @@ function defaultConfigRoot(): string {
   return match;
 }
 
-async function doctor(): Promise<void> {
-  const tools = [
-    ["claude", "Claude Code"],
-    ["codex", "Codex CLI"],
-    ["cursor-agent", "Cursor CLI"],
-    ["agy", "Antigravity CLI"]
-  ] as const;
-
-  let failed = false;
-  for (const [command, label] of tools) {
-    try {
-      const result = await runCommand(command, ["--version"], process.cwd(), 15_000);
-      if (result.exitCode === 0) {
-        console.log(`✓ ${label}: ${result.stdout.trim() || "available"}`);
-      } else {
-        failed = true;
-        console.log(`✗ ${label}: unavailable`);
-      }
-    } catch {
-      failed = true;
-      console.log(`✗ ${label}: unavailable`);
-    }
-  }
-
-  if (failed) process.exitCode = 1;
+async function doctor(verbose: boolean): Promise<void> {
+  if (await runDoctor({ verbose })) process.exitCode = 1;
 }
 
 const program = new Command()
@@ -63,7 +40,8 @@ const program = new Command()
 program
   .command("doctor")
   .description("Check whether supported agent CLIs are installed")
-  .action(doctor);
+  .option("--verbose", "Also check authentication state and adapter flags without printing credentials")
+  .action(async (options: { verbose?: boolean }) => doctor(options.verbose ?? false));
 
 program
   .command("run")

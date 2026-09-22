@@ -70,7 +70,12 @@ Check local integrations:
 
 ```bash
 conductor doctor
+conductor doctor --verbose
 ```
+
+`doctor --verbose` checks the CLI-reported login state and the flags required by each bundled
+adapter. It never prints or reads credentials; an `unknown` authentication state means the CLI did
+not return a recognized non-secret status response.
 
 ## Run
 
@@ -185,6 +190,10 @@ Conductor deliberately does **not** pass dangerous "skip all permissions" flags.
 
 The current boundary is repository isolation, not full host isolation. For coding agents that can invoke local tools, a VM/container remains the stronger deployment model.
 
+Cursor's read-only role is invoked in its native `plan` mode. Claude uses its native `plan` mode
+and tool deny list, while Codex uses the `read-only` sandbox. Conductor's workspace fingerprint
+remains the provider-independent enforcement check for every read-only role.
+
 ## Development
 
 ```bash
@@ -202,7 +211,19 @@ npm run check
 
 ## Status
 
-v0.1 is intentionally small. It does not yet implement shared memory, automatic retries/fallbacks, parallel steps, dynamic model routing, or automatic merge/push.
+v0.1 is intentionally small. It does not yet implement shared memory, automatic retries/fallbacks, parallel steps, dynamic model routing, automatic merge/push, or automatic worktree cleanup. Runs retain their worktree so their artifacts and failure state remain inspectable.
+
+See [integration dogfooding](docs/dogfooding.md) for the tested CLI versions, observed adapter
+behavior, and environment limits from PR #2.
+
+To run the same isolated fixture locally after building, use:
+
+```bash
+npm run dogfood
+```
+
+The harness leaves its fixture, run state, events, and worktree under a temporary directory printed
+at startup. Set `CONDUCTOR_DOGFOOD_ROOT` to retain them at a chosen path.
 
 ## License
 

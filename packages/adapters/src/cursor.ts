@@ -7,6 +7,7 @@ export class CursorProvider extends ProcessProvider {
 
   protected buildArgs(request: ProviderRunRequest): string[] {
     const args = ["-p", "--output-format", "stream-json"];
+    if (request.permissions.filesystem === "read-only") args.push("--mode", "plan");
     if (request.model) args.push("--model", request.model);
     args.push(request.prompt);
     return args;

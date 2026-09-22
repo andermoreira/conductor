@@ -41,7 +41,9 @@ test("builds supported headless arguments for each adapter", () => {
   assert.deepEqual(argsFor(new CodexProvider()), ["exec", "--json", "--sandbox", "read-only", "return an artifact"]);
   assert.deepEqual(argsFor(new CursorProvider()), ["-p", "--output-format", "stream-json", "--mode", "plan", "return an artifact"]);
   assert.deepEqual(argsFor(new CursorProvider(), writable), ["-p", "--output-format", "stream-json", "return an artifact"]);
-  assert.deepEqual(argsFor(new AntigravityProvider()), ["-p", "return an artifact", "--output-format", "stream-json", "--sandbox"]);
+  assert.deepEqual(argsFor(new AntigravityProvider()), [
+    "-p", "return an artifact", "--output-format", "stream-json", "--sandbox", "--mode", "plan"
+  ]);
 });
 
 test("parses final artifacts and text deltas from provider event fixtures", () => {

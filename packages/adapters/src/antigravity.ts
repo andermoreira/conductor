@@ -7,6 +7,7 @@ export class AntigravityProvider extends ProcessProvider {
 
   protected buildArgs(request: ProviderRunRequest): string[] {
     const args = ["-p", request.prompt, "--output-format", "stream-json", "--sandbox"];
+    if (request.permissions.filesystem === "read-only") args.push("--mode", "plan");
     if (request.model) args.push("--model", request.model);
     if (request.effort && request.effort !== "xhigh") {
       args.push("--effort", request.effort);

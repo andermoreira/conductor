@@ -11,6 +11,7 @@ import type {
 import type { ConductorConfig } from "@conductor/config";
 import { collectEvidence } from "@conductor/evidence";
 import {
+  assertCleanRepository,
   assertGitRepository,
   createRunWorktree,
   runCommand,
@@ -65,6 +66,8 @@ export class Orchestrator {
     if (!workflow) throw new Error(`Unknown workflow: ${workflowId}`);
 
     const repoRoot = await assertGitRepository(repository);
+    await assertCleanRepository(repoRoot);
+
     const runId = makeRunId();
     const store = new RunStore(this.stateRoot, runId);
     await store.init();

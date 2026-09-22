@@ -17,9 +17,9 @@
     "policies"
   ],
   "scripts": {
-    "build": "tsup apps/cli/src/index.ts --format esm --dts --clean --banner.js '#!/usr/bin/env node'",
+    "build": "tsup apps/cli/src/index.ts --format esm --clean --banner.js '#!/usr/bin/env node'",
     "dev": "tsx apps/cli/src/index.ts",
-    "test": "vitest run",
+    "test": "tsx --test tests/*.test.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build"
@@ -36,7 +36,6 @@
     "tsup": "^8.5.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.41.0",
-    "vitest": "^3.2.4"
+    "typescript-eslint": "^8.41.0"
   }
 }

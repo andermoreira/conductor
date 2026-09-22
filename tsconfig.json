@@ -17,7 +17,7 @@
       "@conductor/evidence": ["packages/evidence/src/index.ts"],
       "@conductor/runtime": ["packages/runtime/src/index.ts"]
     },
-    "types": ["node", "vitest/globals"]
+    "types": ["node"]
   },
-  "include": ["apps/**/*.ts", "packages/**/*.ts", "tests/**/*.ts", "eslint.config.js"]
+  "include": ["apps/**/*.ts", "packages/**/*.ts", "tests/**/*.ts"]
 }

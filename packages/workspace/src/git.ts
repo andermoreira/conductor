@@ -49,6 +49,22 @@ export async function assertGitRepository(repository: string): Promise<string> {
   return result.stdout.trim();
 }
 
+export async function assertCleanRepository(repository: string): Promise<void> {
+  const result = await runCommand(
+    "git",
+    ["status", "--porcelain=v1", "--untracked-files=all"],
+    repository
+  );
+  if (result.exitCode !== 0) {
+    throw new Error(`Failed to inspect repository: ${result.stderr.trim()}`);
+  }
+  if (result.stdout.trim()) {
+    throw new Error(
+      "Target repository has uncommitted changes. Conductor v0.1 requires a clean working tree so the isolated worktree cannot silently omit local work."
+    );
+  }
+}
+
 export async function createRunWorktree(
   repository: string,
   stateRoot: string,

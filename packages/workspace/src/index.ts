@@ -1,4 +1,5 @@
 export {
+  assertCleanRepository,
   assertGitRepository,
   changedFiles,
   createRunWorktree,

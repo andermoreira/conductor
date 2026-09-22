@@ -1,0 +1,41 @@
+{
+  "name": "@andermoreira/conductor",
+  "version": "0.1.0",
+  "description": "Provider-agnostic runtime for bounded multi-agent software engineering workflows.",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "conductor": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist",
+    "agents",
+    "workflows",
+    "policies"
+  ],
+  "scripts": {
+    "build": "tsup apps/cli/src/index.ts --format esm --clean",
+    "dev": "tsx apps/cli/src/index.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build"
+  },
+  "dependencies": {
+    "commander": "^14.0.0",
+    "yaml": "^2.8.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@types/node": "^24.3.0",
+    "eslint": "^9.34.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.41.0"
+  }
+}

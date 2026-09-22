@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2023"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@conductor/core": ["packages/core/src/index.ts"],
+      "@conductor/config": ["packages/config/src/index.ts"],
+      "@conductor/adapters": ["packages/adapters/src/index.ts"],
+      "@conductor/workspace": ["packages/workspace/src/index.ts"],
+      "@conductor/evidence": ["packages/evidence/src/index.ts"],
+      "@conductor/runtime": ["packages/runtime/src/index.ts"]
+    },
+    "types": ["node"]
+  },
+  "include": ["apps/**/*.ts", "packages/**/*.ts", "tests/**/*.ts"]
+}

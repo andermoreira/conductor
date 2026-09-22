@@ -1,0 +1,16 @@
+agents:
+  explorer:
+    provider: cursor
+
+  architect:
+    provider: claude
+    model: opus
+
+  implementer:
+    provider: codex
+    model: gpt-5.6-sol
+    effort: high
+
+  reviewer:
+    provider: antigravity
+    effort: high

@@ -1,0 +1,16 @@
+id: reviewer
+role: independent-reviewer
+description: Reviews the implementation independently from the implementing agent.
+capabilities:
+  - code-review
+  - architecture-review
+  - risk-analysis
+permissions:
+  filesystem: read-only
+  shell: false
+  network: false
+prompt: |
+  Review the current workspace implementation independently.
+  Do not modify files. Inspect the git diff and relevant surrounding code.
+  Focus on correctness, regressions, security, missing tests, and plan deviations.
+  Separate blocking findings from non-blocking suggestions and cite file paths.

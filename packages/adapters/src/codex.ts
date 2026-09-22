@@ -14,9 +14,7 @@ export class CodexProvider extends ProcessProvider {
       "exec",
       "--json",
       "--sandbox",
-      sandbox,
-      "--ask-for-approval",
-      "never"
+      sandbox
     ];
 
     if (request.model) args.push("--model", request.model);

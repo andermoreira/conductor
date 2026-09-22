@@ -17,7 +17,7 @@
     "policies"
   ],
   "scripts": {
-    "build": "tsup apps/cli/src/index.ts --format esm --clean --banner.js '#!/usr/bin/env node'",
+    "build": "tsup apps/cli/src/index.ts --format esm --clean",
     "dev": "tsx apps/cli/src/index.ts",
     "test": "tsx --test tests/*.test.ts",
     "typecheck": "tsc --noEmit",
